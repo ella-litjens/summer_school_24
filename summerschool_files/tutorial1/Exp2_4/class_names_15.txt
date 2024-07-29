@@ -1,0 +1,15 @@
+bear
+cake
+camel
+chimp
+cormorant
+elephant
+frog
+goat
+gorilla
+horse
+owl
+penguin
+people
+raccoon
+snake
