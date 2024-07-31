@@ -72,6 +72,14 @@ if __name__ == "__main__":
     # open the testing image
     img = Image.open(test_image_filepath)
     print("original image's shape: " + str(img.size))
+
+    # Convert image to RGB if it has an alpha channel
+    if img.mode == 'RGBA':
+        img = img.convert('RGB')
+    elif img.mode != 'RGB':
+        raise ValueError("Image is not in RGB or RGBA format")
+    print(f"Image mode after conversion (if applied): {img.mode}")
+
     # pre-process the input
     transformed_img = data_transforms(img)
     print("transformed image's shape: " + str(transformed_img.shape))
@@ -82,13 +90,13 @@ if __name__ == "__main__":
     # load pre-trained AlexNet model
     print("\nfeed the input into the pre-trained alexnet to get the output")
     
-    #-------FOR PRE TRAINING--------
+    #-------FOR PRE TRAINED MODEL --------
     #alexnet = models.alexnet(pretrained=True)
-    #-------FOR POST TRAINING-------
+    #-------FOR OUR TRAINING-------
     alexnet = models.alexnet(pretrained=False)
     alexnet.classifier[6] = torch.nn.Linear(alexnet.classifier[6].in_features, 15)
-    alexnet.load_state_dict(torch.load('/content/drive/MyDrive/lab_test/summer_school_24/summerschool_files/tutorial1/Exp2_4/checkpoints/AlexNet_epoch_30.pth'))
-    
+    alexnet.load_state_dict(torch.load('/content/drive/MyDrive/CNN_tut/summer_school_24/summerschool_files/tutorial1/Exp2_4/checkpoints/AlexNet_epoch_30.pth'))
+    #NOTE: the path above needs to be changed to the path to your last trained epoch
     
     # put the model to eval mode for testing
     alexnet.eval()
@@ -101,7 +109,7 @@ if __name__ == "__main__":
     visualize_activation_maps(batch_img, alexnet)
 
     # map the class no. to the corresponding label
-    with open('class_names_ImageNet.txt') as labels:
+    with open('class_names_15.txt') as labels:
         classes = [i.strip() for i in labels.readlines()]
     
     # print the first 5 classes to see the labels
