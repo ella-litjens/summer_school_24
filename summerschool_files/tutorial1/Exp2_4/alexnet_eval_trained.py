@@ -95,8 +95,8 @@ if __name__ == "__main__":
     #-------FOR OUR TRAINING-------
     alexnet = models.alexnet(pretrained=False)
     alexnet.classifier[6] = torch.nn.Linear(alexnet.classifier[6].in_features, 15)
-    alexnet.load_state_dict(torch.load('/content/drive/MyDrive/CNN_tut/summer_school_24/summerschool_files/tutorial1/Exp2_4/checkpoints/AlexNet_epoch_30.pth'))
-    #NOTE: the path above needs to be changed to the path to your last trained epoch
+    alexnet.load_state_dict(torch.load('./checkpoints/AlexNet_epoch_30.pth'))
+    #NOTE: you can change the epoch used by adjusting the number in the file name above
     
     # put the model to eval mode for testing
     alexnet.eval()
